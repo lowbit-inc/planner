@@ -4,6 +4,21 @@
 # Inbox #
 #########
 
+inboxAdd() {
+
+  if [ $1 ] ; then
+    thisInboxItemName="${@}"
+  else
+    logMessage error "Missing item name"
+    exit 1
+  fi
+
+  thisTimestamp=`datetimeGetTimestamp`
+
+  cliAdd "inbox" "${thisInboxItemName},${thisTimestamp}"
+
+}
+
 inboxHelp() {
 
   echo "Usage:"
@@ -21,9 +36,7 @@ inboxHelp() {
 
 inboxList() {
 
-  echo "Inbox:"
-
-  backendList inbox
+  cliList "inbox" "1"
 
 }
 
@@ -34,5 +47,17 @@ inboxRouter() {
   else
     inboxHelp
   fi
+
+  case "${usrCommand}" in
+
+    "add")
+      inboxAdd "${@}"
+      ;;
+
+    "list")
+      inboxList
+      ;;
+
+  esac
 
 }

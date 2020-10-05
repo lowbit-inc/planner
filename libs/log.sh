@@ -10,17 +10,19 @@ logMessage() {
   thisLogString="${2}"
   thisTimestamp=`datetimeGetTimestamp`
   shouldPrint="true"
-  shouldExit="false"
 
   case "${thisLogLevel}" in
 
+    "error")
+      thisLogLevelToPrint="ERROR"
+      ;;
+
     "info")
       thisLogLevelToPrint="INFO "
-      shouldPrint=true
-      shouldExit=false
       ;;
 
     *)
+      echo "Error: unknown log level (${thisLogLevel})"
       return 1
       ;;
 
@@ -29,11 +31,6 @@ logMessage() {
   # Printing the log message
   if [[ "${shouldPrint}" == "true" ]] ; then
     echo "[${thisTimestamp}] [${thisLogLevelToPrint}] ${thisLogString}"
-  fi
-
-  # Checking if needs to exit
-  if [[ "${shouldExit}" == "true" ]] ; then
-    exit 1
   fi
 
 }

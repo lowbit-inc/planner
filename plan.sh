@@ -11,6 +11,7 @@ source libs/backend.sh
 source libs/system.sh
 source libs/datetime.sh
 source libs/log.sh
+source libs/cli.sh
 
 # Objects libs
 source libs/inbox.sh

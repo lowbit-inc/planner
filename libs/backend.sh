@@ -6,6 +6,20 @@
 
 backendPath="${HOME}/.lowbit/planner"
 
+backendAdd() {
+
+  thisResource="${1}"
+  thisEntry="${2}"
+  thisResourcePath="${backendPath}/${thisResource}.csv"
+
+  echo "${thisEntry}" >> "${thisResourcePath}"
+
+  thisRC=$?
+
+  return $thisRC
+
+}
+
 backendBootstrap() {
 
   logMessage info "Bootstrapping backend resources"
@@ -36,16 +50,22 @@ backendCreate() {
   # Creating the resource
   echo "${thisHeader}" > "${backendPath}/${thisResource}.csv"
 
+  thisRC=$?
+
+  return $thisRC
+
 }
 
 backendList() {
 
   thisResource="${1}"
+  thisFields="${2}"
+  thisResourcePath="${backendPath}/${thisResource}.csv"
 
-  if [[ -f "${backendPath}/${thisResource}" ]] ; then
-    true
-  else
-    backendCreate 
-  fi
+  tail -n +2 "${thisResourcePath}" | cut -d, -f "${thisFields}"
+
+  thisRC=$?
+
+  return $thisRC
 
 }
