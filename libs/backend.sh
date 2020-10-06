@@ -32,7 +32,7 @@ backendBootstrap() {
 
   mkdir -p "${backendPath}"
 
-  backendCreate inbox "name,timestamp"
+  backendCreate inbox "'NAME','TIMESTAMP'"
 
 }
 
@@ -89,6 +89,21 @@ backendList() {
   thisResourcePath="${backendPath}/${thisResource}.csv"
 
   tail -n +2 "${thisResourcePath}" | cut -d, -f "${thisFields}"
+
+  thisRC=$?
+
+  return $thisRC
+
+}
+
+backendSearch() {
+
+  thisResource="${1}"
+  thisFields="${2}"
+  thisTerm="${3}"
+  thisResourcePath="${backendPath}/${thisResource}.csv"
+
+  tail -n +2 "${thisResourcePath}" | cut -d, -f "${thisFields}" | grep -i "${thisTerm}"
 
   thisRC=$?
 

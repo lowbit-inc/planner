@@ -69,3 +69,19 @@ cliList() {
   done
 
 }
+
+cliSearch() {
+
+  thisResource="${1}"
+  thisFields="${2}"
+  thisTerm="${3}"
+
+  echo "${thisResource^} (searching for '${thisTerm}'):"
+  echo
+
+  IFS=$'\n'
+  for item in `backendSearch ${thisResource} ${thisFields} ${thisTerm}` ; do
+    echo "- $item"
+  done
+
+}

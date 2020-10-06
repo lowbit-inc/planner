@@ -74,11 +74,28 @@ inboxRouter() {
     "list")
       inboxList
       ;;
+
+    "search")
+      inboxSearch "${@}"
+      ;;
     
     *)
       logMessage error "Invalid command '${usrCommand}'"
       ;;
 
   esac
+
+}
+
+inboxSearch() {
+
+  if [ $1 ]; then
+    thisTerm="${@}"
+  else
+    logMessage error "Missing search term"
+    exit 1
+  fi
+
+  cliSearch "inbox" "1" "${thisTerm}"
 
 }
