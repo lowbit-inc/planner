@@ -8,10 +8,10 @@
 source libs/backend.sh
 
 # Common libs
-source libs/system.sh
+source libs/cli.sh
 source libs/datetime.sh
 source libs/log.sh
-source libs/cli.sh
+source libs/system.sh
 
 # Objects libs
 source libs/inbox.sh
@@ -53,8 +53,11 @@ case "${usrCommand}" in
     inboxRouter "${@}"
     ;;
 
+  # Other
+  
   *)
-    systemHelp
+    logMessage error "Invalid command '${usrCommand}'"
+    exit 1
     ;;
 
 esac

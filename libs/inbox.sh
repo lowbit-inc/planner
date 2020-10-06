@@ -15,7 +15,20 @@ inboxAdd() {
 
   thisTimestamp=`datetimeGetTimestamp`
 
-  cliAdd "inbox" "${thisInboxItemName},${thisTimestamp}"
+  cliAdd "inbox" "${thisInboxItemName}" "${thisTimestamp}"
+
+}
+
+inboxDelete() {
+
+  if [ $1 ] ; then
+    thisInboxItemName="${@}"
+  else
+    logMessage error "Missing item name"
+    exit 1
+  fi
+
+  cliDelete "inbox" "${thisInboxItemName}"
 
 }
 
@@ -54,8 +67,16 @@ inboxRouter() {
       inboxAdd "${@}"
       ;;
 
+    "delete")
+      inboxDelete "${@}"
+      ;;
+
     "list")
       inboxList
+      ;;
+    
+    *)
+      logMessage error "Invalid command '${usrCommand}'"
       ;;
 
   esac

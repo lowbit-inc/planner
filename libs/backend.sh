@@ -9,10 +9,16 @@ backendPath="${HOME}/.lowbit/planner"
 backendAdd() {
 
   thisResource="${1}"
-  thisEntry="${2}"
+  thisKey="${2}"
+  thisFields="${3}"
   thisResourcePath="${backendPath}/${thisResource}.csv"
 
-  echo "${thisEntry}" >> "${thisResourcePath}"
+  # Check if key already exists
+  if tail -n +2 "${thisResourcePath}" | grep -e "^${thisKey}," >/dev/null 2>&1 ; then
+    return 1 # RC1 = Key already exists
+  fi
+
+  echo "${thisKey},${thisFields}" >> "${thisResourcePath}"
 
   thisRC=$?
 
@@ -49,6 +55,26 @@ backendCreate() {
 
   # Creating the resource
   echo "${thisHeader}" > "${backendPath}/${thisResource}.csv"
+
+  thisRC=$?
+
+  return $thisRC
+
+}
+
+backendDelete() {
+
+  thisResource="${1}"
+  thisKey="${2}"
+  thisResourcePath="${backendPath}/${thisResource}.csv"
+
+  # Check if key exists
+  if ! tail -n +2 "${thisResourcePath}" | grep -e "^${thisKey}," >/dev/null 2>&1 ; then
+    return 1 # RC1 = Key do not exists
+  fi
+
+  # echo "${thisKey},${thisFields}" >> "${thisResourcePath}"
+  sed -i "/${thisKey},/d" "${thisResourcePath}"
 
   thisRC=$?
 

@@ -7,13 +7,51 @@
 cliAdd() {
 
   thisResource="${1}"
-  thisEntry="${2}"
+  thisKey="${2}"
+  thisFields="${3}"
 
-  if backendAdd "${thisResource}" "${thisEntry}" ; then
-    logMessage info "Entry added to '${thisResource}'"
-  else
-    logMessage error "Faield to add entry to '${thisResource}'"
-  fi
+  backendAdd "${thisResource}" "${thisKey}" "${thisFields}"
+
+  thisRC=$?
+
+  case $thisRC in
+
+    0)
+      logMessage info "Entry added to ${thisResource^}"
+      ;;
+    1)
+      logMessage error "Entry already exists in ${thisResource^}"
+      ;;
+    *)
+      logMessage error "Unknown error"
+      ;;
+
+  esac
+
+}
+
+cliDelete() {
+
+  thisResource="${1}"
+  thisKey="${2}"
+
+  backendDelete "${thisResource}" "${thisKey}"
+
+  thisRC=$?
+
+  case $thisRC in
+
+    0)
+      logMessage info "Entry deleted from ${thisResource^}"
+      ;;
+    1)
+      logMessage error "Entry not found in ${thisResource^}"
+      ;;
+    *)
+      logMessage error "Unknown error"
+      ;;
+
+  esac
 
 }
 
