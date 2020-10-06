@@ -4,14 +4,17 @@
 # Libs #
 ########
 
-# Backend libs
-source libs/backend.sh
-
 # Common libs
-source libs/cli.sh
 source libs/datetime.sh
 source libs/log.sh
 source libs/system.sh
+
+# Backend libs
+source libs/backend.sh
+
+# Modes libs
+source libs/cli.sh
+source libs/interactive.sh
 
 # Objects libs
 source libs/inbox.sh
@@ -40,7 +43,7 @@ case "${usrCommand}" in
     ;;
 
   "start")
-    true
+    interactiveDraw welcome
     ;;
 
   "version")
@@ -54,7 +57,7 @@ case "${usrCommand}" in
     ;;
 
   # Other
-  
+
   *)
     logMessage error "Invalid command '${usrCommand}'"
     exit 1
