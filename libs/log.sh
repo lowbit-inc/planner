@@ -14,11 +14,11 @@ logMessage() {
   case "${thisLogLevel}" in
 
     "error")
-      thisLogLevelToPrint="ERROR"
+      thisLogLevelToPrint="error"
       ;;
 
     "info")
-      thisLogLevelToPrint="INFO "
+      thisLogLevelToPrint="info "
       ;;
 
     *)

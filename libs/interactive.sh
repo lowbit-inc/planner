@@ -4,32 +4,111 @@
 # Interactive #
 ###############
 
-interactiveMenus="
+interactiveMenuOptions="
   inbox
-  areas
+  actions
 "
 
 interactiveActions() {
 
-  echo
+  echo -n "Actions: "
 
-  echo "+------------------------------------------------------------------------------+"
-  echo "| Actions: [add] [list] [search] [delete]                                      |"
-  echo "+------------------------------------------------------------------------------+"
+  case $thisContent in
+    "inbox")
+      echo -n "[add] [delete] [review] "
+      ;;
+    *)
+      false
+      ;;
+  esac
 
-  echo
+  echo "[sync] [quit]"
+
+}
+
+interactiveAsk() {
+
+  thisQuestion="${1}"
+  thisAnswer=""
+
+  clear
+
+  read -p "${thisQuestion}: " thisAnswer
+
+  export thisAnswer
 
 }
 
 interactiveCommand() {
 
+  echo
   read -p "Command: " usrCommand
+
+  case "${usrCommand}" in
+
+    # Menu Options
+
+    "inbox"|"actions")
+      thisContent="${usrCommand}"
+      ;;
+
+    # Global Actions
+    
+    "quit")
+      clear # Privacy ;)
+      exit 0
+      ;;
+
+    # Local Actions
+
+    "add")
+
+      case "${thisContent}" in
+        "inbox")
+          interactiveAsk "Inbox item name"
+          thisInboxItemName="${thisAnswer}"
+          inboxAdd "${thisInboxItemName}"
+          ;;
+        *)
+          false
+          ;;
+      esac
+
+      ;;
+      
+    "delete")
+
+      case "${thisContent}" in
+        "inbox")
+          interactiveAsk "Inbox item name"
+          thisInboxItemName="${thisAnswer}"
+          inboxDelete "${thisInboxItemName}"
+          ;;
+        *)
+          false
+          ;;
+      esac
+
+      ;;
+
+    *)
+      false
+      ;;
+
+  esac
 
 }
 
-interactiveContentWelcome() {
+interactiveContentInbox() {
 
-  echo "Welcome to Lowbit Planner."
+  # List first Inbox Items (limiting the output)
+  inboxList | head
+
+}
+
+interactiveContentActions() {
+
+  echo ">>> Available soon... <<<"
 
 }
 
@@ -37,41 +116,74 @@ interactiveDraw() {
 
   thisContent="${1}"
 
-  # Cleaning the screen
-  clear
+  while [[ true ]]; do
 
-  # Header
-  interactiveHeader
+    # Cleaning the screen
+    clear
 
-  # Menu
-  interactiveMenu
+    # Header
+    interactiveHeader
 
-  # Content
-  interactiveContent${thisContent^}
+    # Menu
+    interactiveMenu
 
-  # Actions
-  interactiveActions
+    # Content
+    interactiveContent${thisContent^}
 
-  # User Command
-  interactiveCommand
+    # Separator
+    interactiveSeparator
+
+    # Actions
+    interactiveActions
+
+    # User Command
+    interactiveCommand
+
+  done
 
 }
 
 interactiveHeader() {
 
-  echo "+----------------------- ${systemName} - ${systemVersion} --------------------------+"
-  echo "|                                                                              |"
+  systemNameLenght="${#systemName}"
+  systemVersionLenght="${#systemVersion}"
+  terminalWidth="80"
+  fixedWidth=7
+  thisWhitespace=`echo "${terminalWidth}-${fixedWidth}-${systemNameLenght}-${systemVersionLenght}" | bc`
+
+  echo "+------------------------------------------------------------------------------+"
+  echo -n "|"
+  printf " ${systemName} - ${systemVersion} "
+  printf ' %.0s' $(seq 1 ${thisWhitespace})
+  echo "|"
+  echo "+------------------------------------------------------------------------------+"
+  echo
 
 }
 
 interactiveMenu() {
 
-  echo -n "+-------------------------- Menu:"
+  echo -n "Menu:"
 
-  for item in $interactiveMenus ; do
-    echo -n " [$item]"
+  for option in $interactiveMenuOptions ; do
+
+    if [[ $option == $thisContent ]] ; then
+      echo -n " [${option^^}]"
+    else
+      echo -n " [${option}]"
+    fi
+
   done
 
-  echo " -----------------------------+" ; echo
+  # Spacing
+  echo ; echo
+
+}
+
+interactiveSeparator() {
+
+  echo
+  echo "+------------------------------------------------------------------------------+"
+  echo
 
 }

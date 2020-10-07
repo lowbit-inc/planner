@@ -5,16 +5,13 @@
 ########
 
 # Common libs
+source libs/backend.sh
+# source libs/color.sh # Soon
+source libs/cli.sh
 source libs/datetime.sh
+source libs/interactive.sh
 source libs/log.sh
 source libs/system.sh
-
-# Backend libs
-source libs/backend.sh
-
-# Modes libs
-source libs/cli.sh
-source libs/interactive.sh
 
 # Objects libs
 source libs/inbox.sh
@@ -43,7 +40,7 @@ case "${usrCommand}" in
     ;;
 
   "start")
-    interactiveDraw welcome
+    interactiveDraw inbox
     ;;
 
   "version")
