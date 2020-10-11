@@ -6,7 +6,7 @@
 
 inboxAdd() {
 
-  if [ $1 ] ; then
+  if [[ "${1}" ]] ; then
     thisInboxItemName="${@}"
   else
     logMessage error "Missing item name"
@@ -21,7 +21,7 @@ inboxAdd() {
 
 inboxDelete() {
 
-  if [ $1 ] ; then
+  if [[ ${1} ]] ; then
     thisInboxItemName="${@}"
   else
     logMessage error "Missing item name"
@@ -55,7 +55,7 @@ inboxList() {
 
 inboxRouter() {
 
-  if [[ $1 ]] ; then
+  if [[ ${1} ]] ; then
     usrCommand=$1 ; shift
   else
     inboxHelp
@@ -89,7 +89,7 @@ inboxRouter() {
 
 inboxSearch() {
 
-  if [ $1 ]; then
+  if [[ ${1} ]]; then
     thisTerm="${@}"
   else
     logMessage error "Missing search term"
