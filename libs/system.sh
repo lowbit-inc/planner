@@ -13,12 +13,20 @@ systemHelp() {
   echo "  `basename $0` COMMAND [SUBCMOMAND]"
   echo
   echo "General commands:"
-  echo "  help      - Prints main help"
+  echo "  help      - Print main help message"
   echo "  start     - Start interactive mode"
-  echo "  version   - Prints CLI version"
+  echo "  sync      - Sync backend"
+  echo "  version   - Print CLI version"
   echo
   echo "Objects commands:"
+  echo "  action    - Actions operations"
+  echo "  area      - Areas operations"
+  echo "  checklist - Checklists operations"
+  echo "  goal      - Goals operations"
+  echo "  habit     - Habits operations"
   echo "  inbox     - Inbox operations"
+  echo "  lists     - Lists operations"
+  echo "  project   - Projects operations"
   echo
   exit 0
 

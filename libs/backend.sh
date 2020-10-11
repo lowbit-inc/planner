@@ -32,6 +32,7 @@ backendBootstrap() {
 
   mkdir -p "${backendPath}"
 
+  backendCreate area "'NAME','TIMESTAMP'"
   backendCreate inbox "'NAME','TIMESTAMP'"
 
 }

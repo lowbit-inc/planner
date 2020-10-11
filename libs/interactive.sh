@@ -6,7 +6,13 @@
 
 interactiveMenuOptions="
   inbox
+  areas
   actions
+  projects
+  goals
+  habits
+  lists
+  checklists
 "
 
 interactiveActions() {
@@ -14,6 +20,9 @@ interactiveActions() {
   echo -n "Actions: "
 
   case $thisContent in
+    "areas")
+      echo -n "[add] [delete] [select] "
+      ;;
     "inbox")
       echo -n "[add] [delete] [review] "
       ;;
@@ -48,7 +57,7 @@ interactiveCommand() {
 
     # Menu Options
 
-    "inbox"|"actions")
+    "inbox"|"areas")
       thisContent="${usrCommand}"
       ;;
 
@@ -64,11 +73,19 @@ interactiveCommand() {
     "add")
 
       case "${thisContent}" in
+
+        "areas")
+          interactiveAsk "Area name"
+          thisAreaName="${thisAnswer}"
+          areaAdd "${thisAreaName}"
+          ;;
+
         "inbox")
           interactiveAsk "Inbox item name"
           thisInboxItemName="${thisAnswer}"
           inboxAdd "${thisInboxItemName}"
           ;;
+
         *)
           false
           ;;
@@ -79,11 +96,19 @@ interactiveCommand() {
     "delete")
 
       case "${thisContent}" in
+
+        "areas")
+          interactiveAsk "Area name"
+          thisAreaName="${thisAnswer}"
+          areaDelete "${thisAreaName}"
+          ;;
+
         "inbox")
           interactiveAsk "Inbox item name"
           thisInboxItemName="${thisAnswer}"
           inboxDelete "${thisInboxItemName}"
           ;;
+
         *)
           false
           ;;
@@ -96,6 +121,13 @@ interactiveCommand() {
       ;;
 
   esac
+
+}
+
+interactiveContentAreas() {
+
+  # List all Areas
+  areaList
 
 }
 
@@ -157,7 +189,6 @@ interactiveHeader() {
   printf ' %.0s' $(seq 1 ${thisWhitespace})
   echo "|"
   echo "+------------------------------------------------------------------------------+"
-  echo
 
 }
 
@@ -165,6 +196,7 @@ interactiveMenu() {
 
   echo -n "Menu:"
 
+  unset IFS
   for option in $interactiveMenuOptions ; do
 
     if [[ $option == $thisContent ]] ; then

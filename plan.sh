@@ -14,6 +14,7 @@ source libs/log.sh
 source libs/system.sh
 
 # Objects libs
+source libs/area.sh
 source libs/inbox.sh
 
 ##########
@@ -48,6 +49,10 @@ case "${usrCommand}" in
     ;;
 
   # Objects commands
+
+  "area")
+    areaRouter "${@}"
+    ;;
 
   "inbox")
     inboxRouter "${@}"

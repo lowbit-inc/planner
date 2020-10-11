@@ -38,10 +38,10 @@ inboxHelp() {
   echo "  `basename $0` inbox [COMMAND]"
   echo
   echo "Commands:"
-  echo "  add ITEM      - Adds a new inbox item"
-  echo "  list          - Lists all inbox items"
-  echo "  search TERM   - Searchs for inbox items"
-  echo "  delete ITEM   - Deletes an inbox item"
+  echo "  add ITEM      - Add a new inbox item"
+  echo "  list          - List all inbox items"
+  echo "  search TERM   - Search for inbox items"
+  echo "  delete ITEM   - Delete an inbox item"
   echo
   exit 0
 
