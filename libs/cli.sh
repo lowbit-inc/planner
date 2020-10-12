@@ -17,10 +17,10 @@ cliAdd() {
   case $thisRC in
 
     0)
-      logMessage info "Entry added to ${thisResource^}"
+      logMessage info "'${thisKey}' added to '${thisResource}'"
       ;;
     1)
-      logMessage error "Entry already exists in ${thisResource^}"
+      logMessage error "'${thisKey}' already exists in '${thisResource}'"
       ;;
     *)
       logMessage error "Unknown error"
@@ -42,10 +42,10 @@ cliDelete() {
   case $thisRC in
 
     0)
-      logMessage info "Entry deleted from ${thisResource^}"
+      logMessage info "'${thisKey}' deleted from '${thisResource}'"
       ;;
     1)
-      logMessage error "Entry not found in ${thisResource^}"
+      logMessage error "'${thisKey}' not found in '${thisResource}'"
       ;;
     *)
       logMessage error "Unknown error"

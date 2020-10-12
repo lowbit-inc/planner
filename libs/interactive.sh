@@ -19,11 +19,11 @@ interactiveActions() {
 
   echo -n "Actions: "
 
-  case $thisContent in
-    "areas")
+  case "${thisMenu^}${thisContent^}" in
+    "AreasList")
       echo -n "[add] [delete] [select] "
       ;;
-    "inbox")
+    "InboxList")
       echo -n "[add] [delete] [review] "
       ;;
     *)
@@ -58,7 +58,8 @@ interactiveCommand() {
     # Menu Options
 
     "inbox"|"areas")
-      thisContent="${usrCommand}"
+      thisMenu="${usrCommand}"
+      thisContent="list"
       ;;
 
     # Global Actions
@@ -72,15 +73,15 @@ interactiveCommand() {
 
     "add")
 
-      case "${thisContent}" in
+      case "${thisMenu^}${thisContent^}" in
 
-        "areas")
+        "AreasList")
           interactiveAsk "Area name"
           thisAreaName="${thisAnswer}"
-          areaAdd "${thisAreaName}"
+          areasAdd "${thisAreaName}"
           ;;
 
-        "inbox")
+        "InboxList")
           interactiveAsk "Inbox item name"
           thisInboxItemName="${thisAnswer}"
           inboxAdd "${thisInboxItemName}"
@@ -95,15 +96,15 @@ interactiveCommand() {
       
     "delete")
 
-      case "${thisContent}" in
+      case "${thisMenu^}${thisContent^}" in
 
-        "areas")
+        "AreasList")
           interactiveAsk "Area name"
           thisAreaName="${thisAnswer}"
-          areaDelete "${thisAreaName}"
+          areasDelete "${thisAreaName}"
           ;;
 
-        "inbox")
+        "InboxList")
           interactiveAsk "Inbox item name"
           thisInboxItemName="${thisAnswer}"
           inboxDelete "${thisInboxItemName}"
@@ -124,29 +125,39 @@ interactiveCommand() {
 
 }
 
-interactiveContentAreas() {
+interactiveContentActionsList() {
 
-  # List all Areas
-  areaList
+  echo ">>> Available soon... <<<"
 
 }
 
-interactiveContentInbox() {
+interactiveContentAreasList() {
+
+  # List all Areas
+  areasList
+
+}
+
+interactiveContentInboxList() {
 
   # List first Inbox Items (limiting the output)
   inboxList | head
 
 }
 
-interactiveContentActions() {
+interactiveContentMiscWelcome() {
 
-  echo ">>> Available soon... <<<"
+  echo "Welcome to ${systemName}."
+  echo
+  echo "=> Type the name of a [menu] to change between contexts."
+  echo "=> Type the name of an [action] to interact."
 
 }
 
 interactiveDraw() {
 
-  thisContent="${1}"
+  thisMenu="${1}"
+  thisContent="${2}"
 
   while [[ true ]]; do
 
@@ -160,7 +171,7 @@ interactiveDraw() {
     interactiveMenu
 
     # Content
-    interactiveContent${thisContent^}
+    interactiveContent${thisMenu^}${thisContent^}
 
     # Separator
     interactiveSeparator
@@ -199,7 +210,7 @@ interactiveMenu() {
   unset IFS
   for option in $interactiveMenuOptions ; do
 
-    if [[ $option == $thisContent ]] ; then
+    if [[ $option == $thisMenu ]] ; then
       echo -n " [${option^^}]"
     else
       echo -n " [${option}]"

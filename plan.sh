@@ -14,7 +14,8 @@ source libs/log.sh
 source libs/system.sh
 
 # Objects libs
-source libs/area.sh
+source libs/actions.sh
+source libs/areas.sh
 source libs/inbox.sh
 
 ##########
@@ -41,7 +42,7 @@ case "${usrCommand}" in
     ;;
 
   "start")
-    interactiveDraw inbox
+    interactiveDraw "misc" "welcome"
     ;;
 
   "version")
@@ -50,8 +51,12 @@ case "${usrCommand}" in
 
   # Objects commands
 
-  "area")
-    areaRouter "${@}"
+  "actions")
+    actionsRouter "${@}"
+    ;;
+
+  "areas")
+    areasRouter "${@}"
     ;;
 
   "inbox")

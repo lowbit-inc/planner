@@ -19,14 +19,14 @@ systemHelp() {
   echo "  version   - Print CLI version"
   echo
   echo "Objects commands:"
-  echo "  action    - Actions operations"
-  echo "  area      - Areas operations"
-  echo "  checklist - Checklists operations"
-  echo "  goal      - Goals operations"
-  echo "  habit     - Habits operations"
-  echo "  inbox     - Inbox operations"
-  echo "  lists     - Lists operations"
-  echo "  project   - Projects operations"
+  echo "  actions     - Actions operations"
+  echo "  areas       - Areas operations"
+  echo "  checklists  - Checklists operations"
+  echo "  goals       - Goals operations"
+  echo "  habits      - Habits operations"
+  echo "  inbox       - Inbox operations"
+  echo "  lists       - Lists operations"
+  echo "  projects    - Projects operations"
   echo
   exit 0
 

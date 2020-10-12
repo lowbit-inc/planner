@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-########
-# Area #
-########
+#########
+# Areas #
+#########
 
-areaAdd() {
+areasAdd() {
 
   if [[ "${1}" ]] ; then
     thisAreaName="${@}"
@@ -15,11 +15,11 @@ areaAdd() {
 
   thisTimestamp=`datetimeGetTimestamp`
 
-  cliAdd "area" "${thisAreaName}" "${thisTimestamp}"
+  cliAdd "areas" "${thisAreaName}" "${thisTimestamp}"
 
 }
 
-areaDelete() {
+areasDelete() {
 
   if [[ ${1} ]] ; then
     thisAreaName="${@}"
@@ -28,14 +28,14 @@ areaDelete() {
     exit 1
   fi
 
-  cliDelete "area" "${thisAreaName}"
+  cliDelete "areas" "${thisAreaName}"
 
 }
 
-areaHelp() {
+areasHelp() {
 
   echo "Usage:"
-  echo "  `basename $0` area [COMMAND]"
+  echo "  `basename $0` areas [COMMAND]"
   echo
   echo "Commands:"
   echo "  add AREA      - Add a new area"
@@ -46,32 +46,32 @@ areaHelp() {
 
 }
 
-areaList() {
+areasList() {
 
-  cliList "area" "1"
+  cliList "areas" "1"
 
 }
 
-areaRouter() {
+areasRouter() {
 
   if [[ ${1} ]] ; then
     usrCommand=$1 ; shift
   else
-    areaHelp
+    areasHelp
   fi
 
   case "${usrCommand}" in
 
     "add")
-      areaAdd "${@}"
+      areasAdd "${@}"
       ;;
 
     "delete")
-      areaDelete "${@}"
+      areasDelete "${@}"
       ;;
 
     "list")
-      areaList
+      areasList
       ;;
 
     *)

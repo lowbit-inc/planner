@@ -32,8 +32,16 @@ backendBootstrap() {
 
   mkdir -p "${backendPath}"
 
-  backendCreate area "'NAME','TIMESTAMP'"
-  backendCreate inbox "'NAME','TIMESTAMP'"
+  # Inbox
+  backendCreate "inbox" "'NAME','TIMESTAMP'"
+
+  # Areas
+  backendCreate "areas" "'NAME','TIMESTAMP'"
+  backendAdd "areas" "personal" "`datetimeGetTimestamp`"
+  backendAdd "areas" "work" "`datetimeGetTimestamp`"
+
+  # Actions
+  backendCreate "actions" "'NAME','TIMESTAMP','AREA'"
 
 }
 
@@ -80,6 +88,21 @@ backendDelete() {
   thisRC=$?
 
   return $thisRC
+
+}
+
+backendKeyExists() {
+
+  thisResource="${1}"
+  thisKey="${2}"
+
+  thisResourcePath="${backendPath}/${thisResource}.csv"
+
+  if tail -n +2 "${thisResourcePath}" | grep -e "^${thisKey}," >/dev/null 2>&1 ; then
+    return 0
+  else
+    return 1
+  fi
 
 }
 
