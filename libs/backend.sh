@@ -83,7 +83,7 @@ backendDelete() {
   fi
 
   # echo "${thisKey},${thisFields}" >> "${thisResourcePath}"
-  sed -i "/${thisKey},/d" "${thisResourcePath}"
+  sed -i "" "/${thisKey},/d" "${thisResourcePath}"
 
   thisRC=$?
 
